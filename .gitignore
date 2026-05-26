@@ -1,0 +1,6 @@
+/drifthound
+/bin/
+*.test
+*.out
+.idea/
+.vscode/
