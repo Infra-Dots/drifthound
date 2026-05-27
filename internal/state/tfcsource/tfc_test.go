@@ -36,7 +36,7 @@ func TestSelectWorkspaces(t *testing.T) {
 			for i, w := range got {
 				names[i] = w.Name
 			}
-			if !reflect.DeepEqual(names, tc.want) && !(len(names) == 0 && len(tc.want) == 0) {
+			if !reflect.DeepEqual(names, tc.want) && (len(names) != 0 || len(tc.want) != 0) {
 				t.Errorf("got %v, want %v", names, tc.want)
 			}
 		})

@@ -215,7 +215,7 @@ func loadStates(ctx context.Context, sources []state.Source, accounts, regions [
 				return nil, fmt.Errorf("load %s: %w", ref.Name, err)
 			}
 			resources, err := tfstate.Parse(rc, ref.Name)
-			rc.Close()
+			_ = rc.Close()
 			if err != nil {
 				return nil, fmt.Errorf("parse %s: %w", ref.Name, err)
 			}

@@ -198,7 +198,7 @@ func (s *Source) listWorkspaces(ctx context.Context, search string) ([]workspace
 			} `json:"meta"`
 		}
 		err = json.NewDecoder(resp.Body).Decode(&body)
-		resp.Body.Close()
+		_ = resp.Body.Close()
 		if err != nil {
 			return nil, fmt.Errorf("tfc: decode workspaces: %w", err)
 		}
@@ -281,7 +281,7 @@ func (l *stateLoader) download(ctx context.Context, url string) (io.ReadCloser, 
 		return nil, fmt.Errorf("tfc: download state for %s: %w", l.workspaceName, err)
 	}
 	if resp.StatusCode >= 400 {
-		resp.Body.Close()
+		_ = resp.Body.Close()
 		return nil, fmt.Errorf("tfc: download state for %s: HTTP %d", l.workspaceName, resp.StatusCode)
 	}
 	return resp.Body, nil
@@ -301,7 +301,7 @@ func (s *Source) doAuthed(ctx context.Context, method, url string) (*http.Respon
 	}
 	if resp.StatusCode >= 400 {
 		b, _ := io.ReadAll(resp.Body)
-		resp.Body.Close()
+		_ = resp.Body.Close()
 		return nil, fmt.Errorf("tfc: %s HTTP %d: %s", url, resp.StatusCode, strings.TrimSpace(string(b)))
 	}
 	return resp, nil
